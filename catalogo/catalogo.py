@@ -1,17 +1,20 @@
 import csv
 from ast import literal_eval
 
-data=[]
-dic={}
+
 def read_csv_file(filename):
+	dic={}
+	data=[]
 	f=open(filename)
 	for row in csv.reader(f):
 		data.insert(0,row)
 	f.close()
 	data.pop()
-	to_dict(data)
+	dic=to_dict(data)
+	return dic
 
 def to_dict(data):
+	dic={}
 	for row in data:
 		name=row.pop(0)
 		dic[name]={"mat":0,"tt":0,"ref":0}
@@ -21,7 +24,8 @@ def to_dict(data):
 				dic[name][p]=el
 			else:
 				dic[name][p]=literal_eval(el)
+	return dic
 
 if __name__ == '__main__':
-	read_csv_file("datos.csv")
-	print(dic)
+	dic=read_csv_file("datos.csv")
+	rint(dic)
