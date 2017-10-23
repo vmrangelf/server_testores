@@ -29,4 +29,3 @@ def to_dict(data):
 if __name__ == '__main__':
 	dic=read_csv_file("datos.csv")
 	rint(dic)
-
