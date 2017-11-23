@@ -1,0 +1,9 @@
+{"val":"T","tipo":"Op",
+	"expr":[{"val":"T","tipo":"Op",
+				"expr":[{"val":"s","tipo":"Mat"},
+						{"val":"m1","tipo":"Mat"}]},
+			{"val":"G","tipo":"Op",
+				"expr":[{"val":"m2","tipo":"Mat"},
+				        {"val":"T","tipo":"Op",
+				        	"expr":[{"val":"cc","tipo":"Mat"},
+				                    {"val":"h1","tipo":"Mat"}]}]}]}
