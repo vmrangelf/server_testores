@@ -8,7 +8,7 @@ def recorrido(arbol,pila):
 		pila=conc(arbol["expr"],pila);op=arbol["val"]
 		if op == 'P':
 			obj=operadores(recorrido(pila[0],[]),[[],[]])
-			aplica_operador(obj,op,int(arbol["expt"]))
+			aplica_operador(obj,op,pila[1]["val"])
 		else:
 			obj=operadores(recorrido(pila[0],pila[1:]),recorrido(pila[1],[]))
 			aplica_operador(obj,op)
@@ -35,6 +35,6 @@ def conc(lista1,lista2):
 
 if __name__ == '__main__':
 	dic=read_csv_file("datos.csv")
-	data = json.load(open('data2.json'))
+	data = json.load(open('data4.json'))
 	r=recorrido(data,[])
 	print(r)

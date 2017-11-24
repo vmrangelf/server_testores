@@ -1,6 +1,7 @@
 {"val":"T","tipo":"Op",
 	"expr":[{"val":"T","tipo":"Op",
-				"expr":[{"val":"P","tipo":"Op","expt":3,
-							"expr":[{"val":"aurora","tipo":"Mat"}]},
+				"expr":[{"val":"P","tipo":"Op",
+							"expr":[{"val":"aurora","tipo":"Mat"},
+							        {"val":2,"tipo":"Int"}]},
 						{"val":"m1","tipo":"Mat"}]},
 			{"val":"m2","tipo":"Mat"}]}

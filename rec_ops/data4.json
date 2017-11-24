@@ -1,0 +1,7 @@
+{"val":"P","tipo":"Op",
+ "expr":[{"val":"G","tipo":"Op",
+	      "expr":[{"val":"minima","tipo":"Mat"},
+	              {"val":"P","tipo":"Op",
+	               "expr":[{"val":"h1","tipo":"Mat"},
+	                 	   {"val":2,"tipo":"Int"}]}]},
+		 {"val":2,"tipo":"Int"}]}

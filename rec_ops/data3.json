@@ -7,5 +7,5 @@
 							"expr":[{"val":"m2","tipo":"Mat"},
 							        {"val":"T","tipo":"Op",
 							        	"expr":[{"val":"cc","tipo":"Mat"},
-							                    {"val":"h1","tipo":"Mat"}]}]}]}
-			]}
+							                    {"val":"h1","tipo":"Mat"}]}]}]},
+			{"val":3,"tipo":"Int"}]}
