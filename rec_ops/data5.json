@@ -1,0 +1,3 @@
+{"val":"G","tipo":"Op",
+ "expr":[{"val":"minima","tipo":"Mat"},
+	 {"val":"h1","tipo":"Mat"}]}
