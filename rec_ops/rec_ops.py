@@ -37,7 +37,7 @@ def conc(lista1, lista2):
         return l2
 
 def to_dic(res):
-        dic = {"nombre": "resulatado", "matriz": res[0], "tt": res[1],
+        dic = {"mat": res[0], "tt": res[1],
                "ref": "Matriz resultente"}
         return dic
 
