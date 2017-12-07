@@ -47,7 +47,7 @@ def solve(var):
         r = recorrido(var, [], dic)
         return to_dic(r)
 
-if __name_  == '__main__':
+if __name__ == '__main__':
         d = {"val": "G", "tipo": "Op",
              "expr": [{"val": "minima", "tipo": "Mat"},
                       {"val": "h1", "tipo": "Mat"}]}
