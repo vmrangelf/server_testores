@@ -1,5 +1,5 @@
 from catalogo import read_csv_file
-from operadores import *
+from operadores import operadores
 
 
 def recorrido(arbol, pila, dic):
@@ -10,9 +10,15 @@ def recorrido(arbol, pila, dic):
                         obj = operadores(recorrido(pila[0], [], dic), [[], []])
                         aplica_operador(obj, op, pila[1]["val"])
                 else:
-                        obj = operadores(recorrido(pila[0], pila[1:], dic),
-                                         recorrido(pila[1], [], dic))
-                        aplica_operador(obj, op)
+                        print(op)
+                        try:
+                                ["G", "T"].index(op)
+                                obj = operadores(recorrido(pila[0], pila[1:], dic),
+                                                 recorrido(pila[1], [], dic))
+                                aplica_operador(obj, op)
+                        except:
+                                print("Error")
+                                return False
                 return [obj.matriz, obj.ttm]
         else:
                 return [dic[arbol["val"]]["mat"], dic[arbol["val"]]["tt"]]
@@ -48,7 +54,7 @@ def solve(var):
         return to_dic(r)
 
 if __name__ == '__main__':
-        d = {"val": "G", "tipo": "Op",
+        d = {"val": "T", "tipo": "Op",
              "expr": [{"val": "minima", "tipo": "Mat"},
                       {"val": "h1", "tipo": "Mat"}]}
         print(solve(d))
