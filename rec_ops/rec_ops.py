@@ -50,5 +50,6 @@ def solve(var):
 if __name__ == '__main__':
         d = {"val": "G", "tipo": "Op",
              "expr": [{"val": "minima", "tipo": "Mat"},
-                      {"val": "h1", "tipo": "Mat"}]}
+                      {"val": "P", "tipo": "op", 
+                      "expr": [{"val": "aurora", "tipo": "Mat"},{"val": 5, "tipo": "Int"}]}]}
         print(solve(d))

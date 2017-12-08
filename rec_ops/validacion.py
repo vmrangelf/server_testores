@@ -54,7 +54,7 @@ def solve(var):
         return to_dic(r)
 
 if __name__ == '__main__':
-        d = {"val": "T", "tipo": "Op",
+        d = {"val": "P", "tipo": "Op",
              "expr": [{"val": "minima", "tipo": "Mat"},
-                      {"val": "h1", "tipo": "Mat"}]}
+                      {"val": "2", "tipo": "Mat"}]}
         print(solve(d))

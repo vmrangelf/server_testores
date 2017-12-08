@@ -1,15 +1,12 @@
 '''
 operadores.py
-
 	Se definen 3 funciones principales las cuales
 	aplican los operadores (fi,theta,gamma) a 
 	dos matrices básica y regresan la matriz
 	resultante. 
-
-		phi(A,B)
+		fi(A,B)
 		theta(A,B)
 		gamma(A,B)
-
 sep, 2017.
 '''
 import numpy as np
@@ -26,13 +23,13 @@ class operadores:
 		self.ttm=[]
 		self.ttm_aux =[]
 		self.matriz=[]
- 
+
 	def concatena(self,a,b):
 		aux=a[:]
 		for i in b:
 			aux.append(i)
 		return aux
- 
+
 	def phi_aux(self,mA,mO,exp,ind):
 		"""Genera la matriz del operador fi."""
 		m_aux=[]
@@ -44,14 +41,14 @@ class operadores:
 				m_aux.insert(0,fila)
 			m_aux.reverse()
 			self.phi_aux(m_aux,mO,exp,ind+1)
- 
+
 	def obtenerClasesEqu(self, test, lA, exp):
 		clases = []
 		for x in range(1, exp):
 			clases. insert(0, [i + (lA * x) for i in test])
 		clases.reverse()
-		return clases   
- 
+		return clases	
+
 	def sustituir(self, testor, listPos, clasesEq, listTest):
 		test = testor[:]
 		if listPos == []:
@@ -62,21 +59,21 @@ class operadores:
 				test[pos] = clase[pos]
 				if len(listPos) == 1:
 					t = test[:]
+					listTest.insert(0, t)
 					self.sustituir(test, [], clasesEq, listTest)
 				else:
 					lp=listPos[:]
 					lp.pop(0)
 					self.sustituir(test, lp, clasesEq, listTest)
 			
-			
 	def obtenerPosiciones(self, tamTest):
 		listPos = []
-		test = list(range(tamTest))     
+		test = list(range(tamTest))		
 		for el in range(1, len(test) + 1) :
 			aux = list(cb(test, el))
 			listPos.extend(aux)
 		return listPos
- 
+
 	def phiTT (self, mA, ttA, exp):
 		"""Genera los testores típicos del operador fi."""
 		tt_aux = []
@@ -89,7 +86,7 @@ class operadores:
 				self.sustituir(tt, lp_aux, clasesEqui, [])
 				tt_aux.extend(self.ttm_aux)
 		self.ttm = tt_aux
- 
+
 	def phi(self, exp):
 		"""Función principal del operador fi."""
 		A=self.A
@@ -116,7 +113,7 @@ class operadores:
 		for e in ttB:
 			ttm_aux.insert(0, [x + lA for x in e])
 		self.ttm = ttm_aux
- 
+
 	def gamma_aux(self,mA,mB,lA,lB):
 		"""Genera la matriz del operador gamma."""
 		m_aux=[]
@@ -128,7 +125,7 @@ class operadores:
 			m_aux.insert(0,fila)
 		m_aux.reverse()
 		self.matriz=m_aux
- 
+
 	def gamma(self):
 		"""Función principal del operador gamma."""
 		mA=self.A
@@ -150,7 +147,8 @@ class operadores:
 				tt_aux = e2[:]
 				tt_aux.extend(tt_sum)
 				ttm_aux.insert(0, tt_aux)
-				ttm_aux.reverse()
+			tt_sum = []
+			ttm_aux.reverse()
 		self.ttm = ttm_aux
 	
 if __name__ == '__main__':
@@ -166,15 +164,13 @@ if __name__ == '__main__':
 	[1,0,1,1]]
 
 	TTA = [[1, 5, 6], [1, 3, 6], [2, 5, 6]]
-	TTB = [[3], [1, 2], [1, 4], [2, 3]]
+	TTB = [[3], [1, 2], [1, 4], [2, 3]]							
 
-	ops=operadores([B,TTB],[[],[]])
-	ops.phi(2)
+	ops=operadores([A,TTA],[B,TTB])
+	ops.gamma()
 	m=np.array(ops.matriz)
 	ttm=np.array(ops.ttm)
 	print("matriz:")
 	print(m)
 	print("TTm("+str(len(ttm))+"):")
 	print(ttm)
-
-
