@@ -1,60 +1,46 @@
+# -*- coding: utf-8 -*-
 from catalogo import read_csv_file
-from operadores import operadores
 
 
 def recorrido(arbol, pila, dic):
-        if "expr" in arbol.keys():
-                pila = conc(arbol["expr"], pila)
-                op = arbol["val"]
-                if op == 'P':
-                        obj = operadores(recorrido(pila[0], [], dic), [[], []])
-                        aplica_operador(obj, op, pila[1]["val"])
-                else:
-                        print(op)
-                        try:
-                                ["G", "T"].index(op)
-                                obj = operadores(recorrido(pila[0], pila[1:], dic),
-                                                 recorrido(pila[1], [], dic))
-                                aplica_operador(obj, op)
-                        except:
-                                print("Error")
-                                return False
-                return [obj.matriz, obj.ttm]
+    if "expr" in arbol.keys():
+        pila = conc(arbol["expr"], pila)
+        op = arbol["val"].lower()
+        if op in ['p', 'g', 'g']:
+            if op == 'p':
+                return (recorrido(pila[0], [], dic) and
+                        (type(pila[1]["val"]) == int))
+            else:
+                return (recorrido(pila[0], pila[1:], dic) and
+                        recorrido(pila[1], [], dic))
         else:
-                return [dic[arbol["val"]]["mat"], dic[arbol["val"]]["tt"]]
-
-
-def aplica_operador(obj, op, n=None):
-        if op == 'T':
-                obj.theta()
-        elif op == 'P':
-                obj.phi(n)
-        elif op == 'G':
-                obj.gamma()
+            return False
+    else:
+        if arbol["val"].lower() in dic.keys():
+            return True
         else:
-                print("error")
+            return False
+
 
 def conc(lista1, lista2):
-        l1 = lista1[:]
-        l2 = lista2[:]
-        l1.reverse()
-        for el in l1:
-                l2.insert(0, el)
-        return l2
-
-def to_dic(res):
-        dic = {"mat": res[0], "tt": res[1],
-               "ref": "Matriz resultente"}
-        return dic
+    l1 = lista1[:]
+    l2 = lista2[:]
+    l1.reverse()
+    for el in l1:
+        l2.insert(0, el)
+    return l2
 
 
-def solve(var):
-        dic = read_csv_file("datos.csv")
-        r = recorrido(var, [], dic)
-        return to_dic(r)
+def validar(var):
+    dic = read_csv_file("datos.csv")
+    r = recorrido(var, [], dic)
+    return r
+
 
 if __name__ == '__main__':
-        d = {"val": "P", "tipo": "Op",
-             "expr": [{"val": "minima", "tipo": "Mat"},
-                      {"val": "2", "tipo": "Mat"}]}
-        print(solve(d))
+    d = {"val": "g", "tipo": "Op",
+         "expr": [{"val": "minIma", "tipo": "Mat"},
+                  {"val": "p", "tipo": "op",
+                   "expr": [{"val": "aurora", "tipo": "Mat"},
+                            {"val": 2, "tipo": "Int"}]}]}
+    print(validar(d))
