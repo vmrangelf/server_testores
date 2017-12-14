@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8"/>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		{% load static %}
+		<script type="text/javascript" src = "{% static "testores/js/analizador.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/controller.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/FileSaver.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/FileSaver.min.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/FileSaver.min.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/d3.min.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/hipergrafo.js" %}"></script>
+		<script type="text/javascript" src = "{% static "testores/js/randomColor.js" %}"></script>
+	</head>
+	<body>
+		
+		<div class = "container">
+			<ul class="nav nav-tabs">
+   				<li class="active"><a data-toggle="tab" href="#divCatalogo">Catalogo</a></li>
+    			<li><a data-toggle="tab" href="#divCalculo">Calculo de matriz basica</a></li>
+  			</ul>
+
+  <div class="tab-content">
+    <div id="divCatalogo" class="tab-pane fade in active">
+      <h3>CATÁLOGO</h3>
+      <p>En esta sección se muestran las matrices disponibles para operaciones.</p>
+      <form class = "form-horizontal" id="formCatalogo">
+				 {%if id_list %}
+		 		<div class="form-group">
+		 			<div class="col-sm-12">
+  					<label for="selectMatriz" class="control-label">Seleccionar matriz:</label><br><br>
+  					</div>
+  					<div class="col-sm-2">
+  						<select  multiple class="form-control" id="selectMatriz" onchange = "seleccionarMatriz()"
+  									style='height: 250px'>
+    						{% for id in id_list %}
+        					<option value = "{{ id }}">{{ id }}</option>
+    						{% endfor %}
+			 			</select>
+
+					</div>
+					<div class="table-responsive col-sm-10">
+						<table class= "table table-bordered" id= "matrixData" border="2">
+  							<thead>
+								<th class="col-md-1 info">Nombre</th>
+								<th class="col-md-5 info">Matriz</th>
+            					<th class="col-md-2 info">Testores Típicos</th>
+            					<th class="col-md-4 info">Referencia</th>            	
+        					</thead>
+      						<tbody>
+       						</tbody>
+   						</table>
+   					</div>
+   				</div> 
+   				<div style="visibility: hidden;" id="divHyperCat" 
+   						class="col-sm-12">
+   					<p>Opciones hipergrafo:</p>
+   					<label class="radio-inline col-sm-2"><input type="radio" name="optradio"
+   					        id = "centroRadio">Centro</label>
+					<label class="radio-inline col-sm-2"><input type="radio" name="optradio"
+							id = "repRadio">Repetición</label>
+					<button type="button" class="btn btn-primary" id="hyperBtn"
+						onclick="obtenerHipergrafoCatalogo()">Dibujar Hipergrafo</button>
+				</div>
+   			</form>				
+			<div class="col-sm-12" id='hipergrafoCatalogo' style="max-width:750px;"></div>
+   			
+    </div>
+    <div id="divCalculo" class="tab-pane fade">
+      <h3>CÁLCULO DE MATRIZ BÁSICA</h3>
+      <pstyle="text-align: justify;">En esta sección se realiza el cálculo de una matriz básica, por medio de una expresión. Las operaciones se realizan con las matrices incluidas en el catálogo.</p>
+      <p>Instrucciones:</p>
+      	<ul style="text-align: justify;"> 
+   			<li>Sólo hay tres operaciones: Gamma(&gamma;) se deberá representar con "G", Tetha(&theta;) se deberá representar con "T" y Phi(&phi;) se deberá representar con "P".</li>
+    		<li>Todas las operaciones son binarias.</li>
+    		<li>Las operaciones de G y T, pueden recibir como argumento, una matriz del catálogo o alguna otra operación de las mencionandas. Por ejemplo: T(minima, minima)</li>
+    		<li>La operación P, recibe forzosamente como primer argumento, una matriz del catálogo o alguna de las operaciones mencionadas, y como segundo argumento, un número entero. Por ejemplo: P(minima, 2)</li>
+  		</ul>
+
+      <form class = "form-horizontal" id="formCalculo">		
+		<div class="form-group col-sm-12">		
+			<p>Introducir Operación:</p>
+			<input type = "text" id = "expresion" class="col-sm-5">
+			<button type="button" class="btn btn-primary" id = "calcMB" onclick="calcularMB()">Calcular MB</button>
+		</div>
+		<div class="col-sm-12 form-group">
+					<div class="col-sm-12">
+  						<label for="selectMatriz" class="control-label">Matrices disponibles:</label><br><br>
+  					</div>
+  					<div class="col-sm-2">
+  						<select  multiple class="form-control" id="selectMatriz" style='height: 250px'>
+    						{% for id in id_list %}
+        					<option value = "{{ id }}">{{ id }}</option>
+    						{% endfor %}
+			 			</select>
+
+					</div>
+					<div class="table-responsive col-md-10">
+						<table class= "table table-bordered" id= "mbResult" border="2">
+  							<thead>
+								<th class="col-md-1 info">Nombre</th>
+								<th class="col-md-7 info">Matriz</th>
+            					<th class="col-md-2 info">Testores Típicos</th>
+            					<th class="col-md-2 info">Referencia</th> 
+        					</thead>
+      						<tbody>
+       						</tbody>
+   						</table>
+   					</div>
+   				</div> 
+   			<button type="button" class="btn btn-primary" id="save-btn" 
+				onclick="saveMatrix()" disabled>Guardar matriz resultante</button><br><br>
+			<div style="visibility: hidden;" id="divHyperRec" 
+   						class="col-sm-12">
+   					<p>Opciones hipergrafo:</p>
+   					<label class="radio-inline col-sm-2"><input type="radio" name="optradioRec"
+   					        id = "centroRadioR">Centro</label>
+					<label class="radio-inline col-sm-2"><input type="radio" name="optradioRec"
+							id = "repRadioR">Repetición</label>
+					<button type="button" class="btn btn-primary" id="hyperRBtn"
+						onclick="obtenerHipergrafoResultante()">Dibujar Hipergrafo</button>
+				</div>
+		</form>	
+		
+		<div class="col-sm-12" id='hipergrafoResultante' style="max-width:750px;"></div>
+    </div>
+
+    
+  </div>
+	
+		</div>
+		{% else %}
+    	<p></p>
+		{% endif %}
+		</div>
+		<!-- Modal -->
+  <div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Error en la expresión</h4>
+        </div>
+        <div class="modal-body">
+          <p>Hay en un error en la expresión, seguir las instrucciones y revisar: </p>
+          <ul style="text-align: justify;"> 
+   			<li>Que los paréntesis de apertura coincidan con los de cierre.</li>
+    		<li>Que entre los argumentos, haya una coma.</li>
+    		<li>Que las matrices correspondan a las del catálogo.</li>
+    		<li>Que los operadores estén escritos como en las instrucciones.</li>
+  		</ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	</body>	
+</html>
